@@ -1,37 +1,65 @@
-HELP.md
-.gradle
+# ===============================
+# BUILD FILES
+# ===============================
+/target/
 build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+*.jar
+*.war
+*.ear
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
+# Maven wrapper
+.mvn/wrapper/maven-wrapper.jar
 
-### IntelliJ IDEA ###
-.idea
+# ===============================
+# IDE - IntelliJ
+# ===============================
+.idea/
 *.iws
 *.iml
 *.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-
-### VS Code ###
+# ===============================
+# IDE - VSCode
+# ===============================
 .vscode/
+
+# ===============================
+# OS FILES
+# ===============================
+.DS_Store
+Thumbs.db
+
+# ===============================
+# LOG FILES
+# ===============================
+*.log
+
+# ===============================
+# ENV / CONFIG
+# ===============================
+.env
+application-local.properties
+application-dev.properties
+
+# ===============================
+# DATABASE
+# ===============================
+*.db
+*.sqlite
+
+# ===============================
+# TEMP FILES
+# ===============================
+*.tmp
+*.swp
+
+# ===============================
+# TEST OUTPUT
+# ===============================
+/reports/
+/test-output/
+
+# ===============================
+# GRADLE (nếu dùng)
+# ===============================
+.gradle/
