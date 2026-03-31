@@ -1,28 +1,24 @@
 package com.example.hrm.controller;
 
-import com.example.hrm.entity.Account;
+import com.example.hrm.dto.request.LoginRequest;
+import com.example.hrm.dto.response.LoginResponse;
 import com.example.hrm.service.AccountService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
     private final AccountService accountService;
 
     @PostMapping("/login")
-    public Account login(@RequestBody Account request) {
-        Account acc = accountService.findByUsername(request.getUsername());
+    public LoginResponse login(@RequestBody LoginRequest request) {
 
-        if (!acc.getPassword().equals(request.getPassword())) {
-            throw new RuntimeException("Wrong password");
-        }
-
-        return acc;
+        return accountService.login(
+                request.getUsername(),
+                request.getPassword()
+        );
     }
 }

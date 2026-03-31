@@ -1,7 +1,8 @@
-package com.example.hrm.service;
+package com.example.hrm.service.impl;
 
 import com.example.hrm.entity.Leave;
 import com.example.hrm.repository.LeaveRepository;
+import com.example.hrm.service.LeaveService;
 import com.example.hrm.type.LeaveStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

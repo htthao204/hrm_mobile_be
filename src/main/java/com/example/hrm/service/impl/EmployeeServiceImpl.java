@@ -1,7 +1,8 @@
-package com.example.hrm.service;
+package com.example.hrm.service.impl;
 
 import com.example.hrm.entity.EmployeeInformation;
 import com.example.hrm.repository.EmployeeInformationRepository;
+import com.example.hrm.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
