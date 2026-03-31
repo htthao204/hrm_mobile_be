@@ -3,7 +3,6 @@ package com.example.hrm.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 @Entity
 @Table(name = "departments")
 @Getter
@@ -16,7 +15,7 @@ public class Department {
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "manager_id")
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "manager_id", nullable = true)
     private EmployeeInformation manager;
 }

@@ -1,4 +1,5 @@
 package com.example.hrm.service;
+import com.example.hrm.dto.request.DepartmentRequest;
 import com.example.hrm.entity.Department;
 
 import java.util.List;
@@ -8,7 +9,7 @@ public interface DepartmentService {
 
     Department getById(Integer id);
 
-    Department create(Department department);
+    Department create(DepartmentRequest departmentRequest);
 
     Department update(Integer id, Department department);
 

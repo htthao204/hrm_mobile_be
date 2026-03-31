@@ -1,5 +1,6 @@
 package com.example.hrm.service;
 
+import com.example.hrm.dto.response.LoginResponse;
 import com.example.hrm.entity.Account;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface AccountService {
     List<Account> getAll();
 
     void delete(Integer id);
+    LoginResponse login(String username, String password);
 }

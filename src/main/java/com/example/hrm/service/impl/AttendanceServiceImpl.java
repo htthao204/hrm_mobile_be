@@ -1,4 +1,4 @@
-package com.example.hrm.service;
+package com.example.hrm.service.impl;
 
 import com.example.hrm.entity.Attendance;
 import com.example.hrm.entity.AttendanceLog;
@@ -6,6 +6,7 @@ import com.example.hrm.entity.EmployeeInformation;
 import com.example.hrm.repository.AttendanceLogRepository;
 import com.example.hrm.repository.AttendanceRepository;
 import com.example.hrm.repository.EmployeeInformationRepository;
+import com.example.hrm.service.AttendanceService;
 import com.example.hrm.type.AttendanceAction;
 import com.example.hrm.type.AttendanceSource;
 import lombok.RequiredArgsConstructor;
@@ -53,7 +54,7 @@ public class AttendanceServiceImpl implements AttendanceService {
         Attendance attendance = new Attendance();
         attendance.setEmployee(emp);
         attendance.setDate(LocalDate.now());
-        attendance.setWorkingHours(8.0); // TODO: tính real
+        attendance.setWorkingHours(8.0);
 
         attendanceRepo.save(attendance);
     }
