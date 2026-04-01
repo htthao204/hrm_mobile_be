@@ -6,6 +6,7 @@ import com.example.hrm.entity.Role;
 import com.example.hrm.repository.AccountRepository;
 import com.example.hrm.repository.RoleRepository;
 import com.example.hrm.service.AccountService;
+import com.example.hrm.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @Override
     public Account findByUsername(String username) {
@@ -71,10 +73,13 @@ public class AccountServiceImpl implements AccountService {
             throw new RuntimeException("Wrong password");
         }
 
+        String token = jwtService.generateToken(account.getUsername());
+
         return LoginResponse.builder()
                 .id(account.getId())
                 .username(account.getUsername())
                 .role(account.getRole().getName())
+                .accessToken(token)   // ⭐ JWT ở đây
                 .build();
     }
 }
