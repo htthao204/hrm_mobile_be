@@ -21,16 +21,22 @@ public class DataInitializer implements CommandLineRunner {
 
         System.out.println("INIT DATABASE...");
 
-        if(accountRepository.findByUsername("admin").isEmpty()){
+        // ✅ tạo ADMIN role nếu chưa có
+        Role adminRole = roleRepository.findByName("ADMIN")
+                .orElseGet(() -> {
+                    Role role = new Role();
+                    role.setName("ADMIN");
+                    role.setDescription("System admin");
+                    return roleRepository.save(role);
+                });
 
-            Role adminRole = roleRepository.findByName("ADMIN")
-                    .orElseThrow(() ->
-                            new RuntimeException("ADMIN role chưa tồn tại"));
+        // ✅ tạo admin account
+        if (accountRepository.findByUsername("admin").isEmpty()) {
 
             Account admin = new Account();
             admin.setUsername("admin");
             admin.setPassword(passwordEncoder.encode("123456"));
-            admin.setRole(adminRole); // ✅ QUAN TRỌNG
+            admin.setRole(adminRole);
 
             accountRepository.save(admin);
 
