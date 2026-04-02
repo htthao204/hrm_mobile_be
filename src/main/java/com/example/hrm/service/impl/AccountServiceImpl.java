@@ -73,13 +73,18 @@ public class AccountServiceImpl implements AccountService {
             throw new RuntimeException("Wrong password");
         }
 
-        String token = jwtService.generateToken(account.getUsername());
+        String accessToken =
+                jwtService.generateToken(account.getUsername());
+
+        String refreshToken =
+                jwtService.generateRefreshToken(account.getUsername());
 
         return LoginResponse.builder()
                 .id(account.getId())
                 .username(account.getUsername())
                 .role(account.getRole().getName())
-                .accessToken(token)   // ⭐ JWT ở đây
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 }
