@@ -3,5 +3,8 @@ package com.example.hrm.repository;
 import com.example.hrm.entity.Department;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DepartmentRepository extends JpaRepository<Department, Integer> {
+public interface DepartmentRepository
+        extends JpaRepository<Department, Integer> {
+
+    boolean existsByName(String name);
 }

@@ -1,20 +1,23 @@
 package com.example.hrm.service;
-import com.example.hrm.entity.EmployeeInformation;
+
+import com.example.hrm.dto.request.EmployeeCreateRequest;
+import com.example.hrm.dto.response.EmployeeResponse;
 
 import java.util.List;
+
 public interface EmployeeService {
 
-    List<EmployeeInformation> getAll();
+    List<EmployeeResponse> getAll();
 
-    EmployeeInformation getById(Integer id);
+    EmployeeResponse getById(Integer id);
 
-    EmployeeInformation create(EmployeeInformation employee);
+    EmployeeResponse create(EmployeeCreateRequest request);
 
-    EmployeeInformation update(Integer id, EmployeeInformation employee);
+    EmployeeResponse update(Integer id, EmployeeCreateRequest request);
 
     void delete(Integer id);
 
-    List<EmployeeInformation> getByDepartment(Integer departmentId);
+    List<EmployeeResponse> getByDepartment(Integer departmentId);
 
-    EmployeeInformation findByEmail(String email);
+    EmployeeResponse findByEmail(String email);
 }

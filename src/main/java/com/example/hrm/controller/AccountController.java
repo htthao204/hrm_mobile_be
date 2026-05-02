@@ -1,5 +1,6 @@
 package com.example.hrm.controller;
 
+import com.example.hrm.dto.request.ChangePasswordRequest;
 import com.example.hrm.entity.Account;
 import com.example.hrm.service.AccountService;
 import lombok.RequiredArgsConstructor;
@@ -8,9 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.security.Principal;
 
 @RestController
-@RequestMapping("/accounts")
+@RequestMapping("/api/accounts")
 @RequiredArgsConstructor
 public class AccountController {
 
@@ -36,5 +38,20 @@ public class AccountController {
     public ResponseEntity<Void> deleteAccount(@PathVariable Integer id) {
         accountService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(
+            @RequestBody ChangePasswordRequest request,
+            Principal principal
+    ) {
+
+        accountService.changePassword(
+                principal.getName(),
+                request.getOldPassword(),
+                request.getNewPassword()
+        );
+
+        return ResponseEntity.ok("Change password success");
     }
 }

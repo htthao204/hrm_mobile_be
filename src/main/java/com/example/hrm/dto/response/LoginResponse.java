@@ -10,6 +10,9 @@ public class LoginResponse {
     private Integer id;
     private String username;
     private String role;
+
+    private Boolean firstLogin;
+
     private String accessToken;
     private String refreshToken;
 }

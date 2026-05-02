@@ -12,4 +12,5 @@ public interface EmployeeInformationRepository
     Optional<EmployeeInformation> findByEmail(String email);
 
     List<EmployeeInformation> findByDepartment_Id(Integer departmentId);
+    boolean existsByDepartment_Id(Integer departmentId);
 }

@@ -48,17 +48,28 @@ public class ScheduleServiceImpl implements ScheduleService {
                     result.add(dto);
                 });
 
-        // ✅ HOLIDAY
+        // ✅ HOLIDAY (RANGE SUPPORT)
         holidayRepo
-                .findByHolidayDateBetween(from, to)
+                .findByStartDateLessThanEqualAndEndDateGreaterThanEqual(to, from)
                 .forEach(h -> {
 
-                    ScheduleItemDTO dto = new ScheduleItemDTO();
-                    dto.setType("HOLIDAY");
-                    dto.setTitle(h.getName());
-                    dto.setDate(h.getHolidayDate());
+                    LocalDate current = h.getStartDate();
 
-                    result.add(dto);
+                    while (!current.isAfter(h.getEndDate())) {
+
+                        // chỉ lấy ngày nằm trong range query
+                        if (!current.isBefore(from) && !current.isAfter(to)) {
+
+                            ScheduleItemDTO dto = new ScheduleItemDTO();
+                            dto.setType("HOLIDAY");
+                            dto.setTitle(h.getName());
+                            dto.setDate(current);
+
+                            result.add(dto);
+                        }
+
+                        current = current.plusDays(1);
+                    }
                 });
 
         // ✅ APPROVED REQUEST
@@ -72,7 +83,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .forEach(r -> {
 
                     ScheduleItemDTO dto = new ScheduleItemDTO();
-                    dto.setType(r.getRequestType().getCode());
+                    dto.setType(r.getRequestType().getCode().name());
                     dto.setTitle(r.getRequestType().getName());
                     dto.setDate(r.getStartDate());
                     dto.setStartTime(r.getStartTime());

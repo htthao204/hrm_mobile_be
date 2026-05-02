@@ -8,30 +8,43 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http
-                // 1. Tắt CSRF để có thể gọi POST/PUT từ Postman mà không cần token
                 .csrf(AbstractHttpConfigurer::disable)
 
-                // 2. Cấu hình quyền truy cập
                 .authorizeHttpRequests(auth -> auth
-                        // Cho phép tất cả các request bắt đầu bằng /api/
-                        .requestMatchers("/api/**").permitAll()
-                        // Hoặc đơn giản là cho phép tất cả mọi thứ để test nhanh
-                        .anyRequest().permitAll()
+                        .requestMatchers("/ws/**").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/holidays/**").permitAll()
+                        .requestMatchers("/api/leave-types/**").permitAll()
+                        .requestMatchers("/api/leaves/**").permitAll()
+                        .requestMatchers("/api/departments/**").permitAll()
+                        .requestMatchers("/api/countries/**").permitAll()
+                        .requestMatchers("/api/roles/**").permitAll()
+                        .requestMatchers("/api/positions/**").permitAll()
+                        .requestMatchers("/api/shifts/**").permitAll()
+                        .requestMatchers("/api/schedules/**").permitAll()
+                        .requestMatchers("/api/employees/**").permitAll()
+                        .anyRequest().authenticated()
                 )
 
-                // 3. Tắt form login mặc định của Spring
+                .addFilterBefore(
+                        jwtAuthenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                )
+
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable);
 

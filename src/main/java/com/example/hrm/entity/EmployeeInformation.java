@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "employee_information")
@@ -43,4 +44,14 @@ public class EmployeeInformation {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    @OneToMany(mappedBy = "employee")
+    private List<Notification> notifications;
+
+    @OneToOne(
+            mappedBy = "employee",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private EmployeePrivateInformation privateInformation;
 }

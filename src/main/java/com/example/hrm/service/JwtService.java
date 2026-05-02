@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class JwtService {
@@ -19,41 +21,58 @@ public class JwtService {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    // ✅ ACCESS TOKEN (1 ngày)
-    public String generateToken(String username) {
+    // ================= ACCESS TOKEN =================
+    public String generateToken(String username, String role) {
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", role);
 
         return Jwts.builder()
+                .claims(claims)
                 .subject(username)
                 .issuedAt(new Date())
                 .expiration(
-                        new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)
+                        new Date(System.currentTimeMillis()
+                                + 1000 * 60 * 60 * 24)
                 )
                 .signWith(getKey())
                 .compact();
     }
 
-    // ✅ REFRESH TOKEN (7 ngày)
+    // ================= REFRESH TOKEN =================
     public String generateRefreshToken(String username) {
 
         return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())
                 .expiration(
-                        new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7)
+                        new Date(System.currentTimeMillis()
+                                + 1000L * 60 * 60 * 24 * 7)
                 )
-                .signWith(getKey()) // ⭐ FIX HERE
+                .signWith(getKey())
                 .compact();
     }
 
-    // ✅ extract username
+    // ================= EXTRACT USERNAME =================
     public String extractUsername(String token) {
 
-        Claims claims = Jwts.parser()
+        return extractAllClaims(token).getSubject();
+    }
+
+    // ================= EXTRACT ROLE =================
+    public String extractRole(String token) {
+
+        return extractAllClaims(token)
+                .get("role", String.class);
+    }
+
+    // ================= PARSE TOKEN =================
+    private Claims extractAllClaims(String token) {
+
+        return Jwts.parser()
                 .verifyWith(getKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-
-        return claims.getSubject();
     }
 }

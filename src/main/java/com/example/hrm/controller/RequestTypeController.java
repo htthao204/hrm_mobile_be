@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/request-types")
+@RequestMapping("/api/request-types")
 @CrossOrigin
 public class RequestTypeController {
 
@@ -48,5 +48,10 @@ public class RequestTypeController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         requestTypeService.delete(id);
+    }
+
+    @PostMapping("/batch")
+    public List<RequestType> createList(@RequestBody List<RequestType> requestTypes) {
+        return requestTypeService.createList(requestTypes);
     }
 }

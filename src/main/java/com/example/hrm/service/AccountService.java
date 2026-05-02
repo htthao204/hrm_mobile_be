@@ -14,5 +14,7 @@ public interface AccountService {
     List<Account> getAll();
 
     void delete(Integer id);
+
     LoginResponse login(String username, String password);
+    void changePassword(String username, String oldPassword, String newPassword);
 }

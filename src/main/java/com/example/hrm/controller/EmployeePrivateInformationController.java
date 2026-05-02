@@ -1,45 +1,44 @@
 package com.example.hrm.controller;
 
-import com.example.hrm.dto.request.EmployeePrivateInformationRequest;
 import com.example.hrm.entity.EmployeePrivateInformation;
-import com.example.hrm.repository.*;
+import com.example.hrm.service.EmployeePrivateInformationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 @RestController
-@RequestMapping("/employee-private")
+@RequestMapping("/api/employee-private")
 @RequiredArgsConstructor
 public class EmployeePrivateInformationController {
 
-    private final EmployeePrivateInformationRepository privateRepo;
-    private final EmployeeInformationRepository employeeRepo;
-    private final CountryRepository countryRepo;
+    private final EmployeePrivateInformationService service;
 
-    @PostMapping
-    public EmployeePrivateInformation create(
-            @RequestBody EmployeePrivateInformationRequest request) {
-
-        EmployeePrivateInformation info = new EmployeePrivateInformation();
-
-        info.setEmployee(
-                employeeRepo.findById(request.getEmployeeId()).orElseThrow());
-
-        info.setDateOfBirth(request.getDateOfBirth());
-        info.setGender(request.getGender());
-        info.setNationalId(request.getNationalId());
-        info.setAddress(request.getAddress());
-
-        info.setCountry(
-                countryRepo.findById(request.getCountryId()).orElseThrow());
-
-        return privateRepo.save(info);
+    @GetMapping("/{employeeId}")
+    public EmployeePrivateInformation get(
+            @PathVariable Integer employeeId
+    ) {
+        return service.getByEmployeeId(employeeId);
     }
 
-    @GetMapping("/employee/{employeeId}")
-    public EmployeePrivateInformation getByEmployee(
-            @PathVariable Integer employeeId) {
+    // ✅ FIX HERE
+    @PostMapping("/{employeeId}")
+    public EmployeePrivateInformation create(
+            @PathVariable Integer employeeId,
+            @RequestBody EmployeePrivateInformation info
+    ) {
+        return service.create(employeeId, info);
+    }
 
-        return privateRepo.findByEmployee_Id(employeeId)
-                .orElseThrow(() -> new RuntimeException("Private info not found"));
+    @PutMapping("/{employeeId}")
+    public EmployeePrivateInformation update(
+            @PathVariable Integer employeeId,
+            @RequestBody EmployeePrivateInformation info
+    ) {
+        return service.update(employeeId, info);
+    }
+
+    @DeleteMapping("/{employeeId}")
+    public void delete(
+            @PathVariable Integer employeeId
+    ) {
+        service.delete(employeeId);
     }
 }

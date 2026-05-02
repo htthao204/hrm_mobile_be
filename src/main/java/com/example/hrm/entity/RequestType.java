@@ -10,35 +10,36 @@ public class RequestType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String code; // LEAVE, ATTENDANCE, WFH, OVERTIME
+    @Enumerated(EnumType.STRING)
+    private RequestTypeCode code;
+
     private String name;
 
-    public RequestType() {
-    }
+    public RequestType() {}
 
-    public RequestType(int id, String code, String name) {
+    public RequestType(int id, RequestTypeCode code, String name) {
         this.id = id;
         this.code = code;
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getCode() {
-        return code;
     }
 
     public int getId() {
         return id;
     }
 
+    public RequestTypeCode getCode() {
+        return code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setCode(String code) {
+    public void setCode(RequestTypeCode code) {
         this.code = code;
     }
 

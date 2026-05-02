@@ -16,50 +16,87 @@ import java.util.List;
 public class DepartmentServiceImpl implements DepartmentService {
 
     private final DepartmentRepository departmentRepo;
-    private final EmployeeInformationRepository employeeRepo; // inject repository
+    private final EmployeeInformationRepository employeeRepo;
 
     @Override
     public List<Department> getAll() {
-        return departmentRepo.findAll();
+        List<Department> list = departmentRepo.findAll();
+
+        System.out.println("SIZE = " + list.size());
+
+        return list;
     }
 
     @Override
     public Department getById(Integer id) {
         return departmentRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Phòng ban không tồn tại với ID: " + id));
+                .orElseThrow(() ->
+                        new RuntimeException("Department not found: " + id));
     }
 
+    // ================= CREATE =================
     @Override
     public Department create(DepartmentRequest request) {
+
+        // ⭐ tránh trùng tên phòng ban
+        if (departmentRepo.existsByName(request.getName())) {
+            throw new RuntimeException("Department already exists");
+        }
 
         Department department = new Department();
         department.setName(request.getName());
 
         if (request.getManagerId() != null) {
+
             EmployeeInformation manager =
                     employeeRepo.findById(request.getManagerId())
-                            .orElseThrow(() -> new RuntimeException("Manager not found"));
+                            .orElseThrow(() ->
+                                    new RuntimeException("Manager not found"));
 
             department.setManager(manager);
         }
 
         return departmentRepo.save(department);
     }
+
+    // ================= UPDATE =================
     @Override
-    public Department update(Integer id, Department departmentDetails) {
+    public Department update(Integer id, DepartmentRequest request) {
+
         Department department = getById(id);
 
-        // Cập nhật các thông tin của phòng ban
-        department.setName(departmentDetails.getName());
-        // department.setDescription(departmentDetails.getDescription()); // Nếu có trường mô tả
-        // department.setManager(departmentDetails.getManager()); // Nếu có quản lý trực thuộc
+        department.setName(request.getName());
+
+        if (request.getManagerId() != null) {
+            EmployeeInformation manager =
+                    employeeRepo.findById(request.getManagerId())
+                            .orElseThrow(() ->
+                                    new RuntimeException("Manager not found"));
+
+            department.setManager(manager);
+        } else {
+            department.setManager(null);
+        }
 
         return departmentRepo.save(department);
     }
 
+    // ================= DELETE =================
     @Override
     public void delete(Integer id) {
+
         Department department = getById(id);
+
+        // ⭐ tránh FK crash khi còn nhân viên
+        boolean hasEmployee =
+                employeeRepo.existsByDepartment_Id(id);
+
+        if (hasEmployee) {
+            throw new RuntimeException(
+                    "Cannot delete department because employees still belong to it"
+            );
+        }
+
         departmentRepo.delete(department);
     }
 }

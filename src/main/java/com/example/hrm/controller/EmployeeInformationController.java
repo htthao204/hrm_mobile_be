@@ -1,8 +1,7 @@
 package com.example.hrm.controller;
 
 import com.example.hrm.dto.request.EmployeeCreateRequest;
-import com.example.hrm.entity.EmployeeInformation;
-import com.example.hrm.repository.*;
+import com.example.hrm.dto.response.EmployeeResponse;
 import com.example.hrm.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -10,115 +9,56 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/employees")
+@RequestMapping("/api/employees")
 @RequiredArgsConstructor
 public class EmployeeInformationController {
 
     private final EmployeeService employeeService;
-    private final DepartmentRepository departmentRepo;
-    private final PositionRepository positionRepo;
-    private final AccountRepository accountRepo;
 
-    // ================= CREATE =================
+    // CREATE
     @PostMapping
-    public EmployeeInformation create(
+    public EmployeeResponse create(
             @RequestBody EmployeeCreateRequest request) {
-
-        EmployeeInformation employee = new EmployeeInformation();
-
-        employee.setFullName(request.getFullName());
-        employee.setEmail(request.getEmail());
-        employee.setPhone(request.getPhone());
-        employee.setHireDate(request.getHireDate());
-
-        // Department
-        if (request.getDepartmentId() != null) {
-            employee.setDepartment(
-                    departmentRepo.findById(request.getDepartmentId())
-                            .orElseThrow(() -> new RuntimeException("Department not found"))
-            );
-        }
-
-        // Position
-        employee.setPosition(
-                positionRepo.findById(request.getPositionId())
-                        .orElseThrow(() -> new RuntimeException("Position not found"))
-        );
-
-        // Account
-        employee.setAccount(
-                accountRepo.findById(request.getAccountId())
-                        .orElseThrow(() -> new RuntimeException("Account not found"))
-        );
-
-        return employeeService.create(employee);
+        return employeeService.create(request);
     }
 
-    // ================= GET ALL =================
+    // GET ALL
     @GetMapping
-    public List<EmployeeInformation> getAll() {
+    public List<EmployeeResponse> getAll() {
         return employeeService.getAll();
     }
 
-    // ================= GET BY ID =================
+    // GET BY ID
     @GetMapping("/{id}")
-    public EmployeeInformation getById(@PathVariable Integer id) {
+    public EmployeeResponse getById(@PathVariable Integer id) {
         return employeeService.getById(id);
     }
 
-    // ================= UPDATE =================
+    // UPDATE
     @PutMapping("/{id}")
-    public EmployeeInformation update(
+    public EmployeeResponse update(
             @PathVariable Integer id,
             @RequestBody EmployeeCreateRequest request) {
-
-        EmployeeInformation employee = new EmployeeInformation();
-
-        employee.setFullName(request.getFullName());
-        employee.setEmail(request.getEmail());
-        employee.setPhone(request.getPhone());
-        employee.setHireDate(request.getHireDate());
-
-        // Department
-        if (request.getDepartmentId() != null) {
-            employee.setDepartment(
-                    departmentRepo.findById(request.getDepartmentId())
-                            .orElseThrow(() -> new RuntimeException("Department not found"))
-            );
-        }
-
-        // Position
-        employee.setPosition(
-                positionRepo.findById(request.getPositionId())
-                        .orElseThrow(() -> new RuntimeException("Position not found"))
-        );
-
-        // Account
-        employee.setAccount(
-                accountRepo.findById(request.getAccountId())
-                        .orElseThrow(() -> new RuntimeException("Account not found"))
-        );
-
-        return employeeService.update(id, employee);
+        return employeeService.update(id, request);
     }
 
-    // ================= DELETE =================
+    // DELETE
     @DeleteMapping("/{id}")
     public String delete(@PathVariable Integer id) {
         employeeService.delete(id);
         return "Employee deleted successfully";
     }
 
-    // ================= FILTER BY DEPARTMENT =================
+    // FILTER
     @GetMapping("/department/{departmentId}")
-    public List<EmployeeInformation> getByDepartment(
+    public List<EmployeeResponse> getByDepartment(
             @PathVariable Integer departmentId) {
         return employeeService.getByDepartment(departmentId);
     }
 
-    // ================= FIND BY EMAIL =================
+    // FIND EMAIL
     @GetMapping("/email")
-    public EmployeeInformation getByEmail(
+    public EmployeeResponse getByEmail(
             @RequestParam String email) {
         return employeeService.findByEmail(email);
     }

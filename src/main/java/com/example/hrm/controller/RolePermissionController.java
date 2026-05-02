@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/role-permissions")
+@RequestMapping("/api/role-permissions")
 @RequiredArgsConstructor
 public class RolePermissionController {
 

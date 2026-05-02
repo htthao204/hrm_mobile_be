@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/leaves")
+@RequestMapping("/api/leaves")
 @RequiredArgsConstructor
 public class LeaveController {
 

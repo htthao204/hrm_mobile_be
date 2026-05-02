@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/leave-types")
+@RequestMapping("/api/leave-types")
 @RequiredArgsConstructor
 public class LeaveTypeController {
 

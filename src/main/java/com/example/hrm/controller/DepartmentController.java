@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/departments")
+@RequestMapping("/api/departments")
 @RequiredArgsConstructor
 public class DepartmentController {
 
@@ -40,14 +40,14 @@ public class DepartmentController {
     }
 
     // =========================
-    // Update department
+    // Update department ✅ FIX
     // =========================
     @PutMapping("/{id}")
     public Department update(
             @PathVariable Integer id,
-            @RequestBody Department department
+            @RequestBody DepartmentRequest request
     ) {
-        return departmentService.update(id, department);
+        return departmentService.update(id, request);
     }
 
     // =========================

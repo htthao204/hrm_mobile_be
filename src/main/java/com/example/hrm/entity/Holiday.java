@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-
+import java.util.List;
 @Entity
 @Table(name = "holidays")
 @Getter
@@ -14,21 +14,26 @@ public class Holiday {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    // Tên ngày lễ
     private String name;
 
-    // Ngày nghỉ
-    private LocalDate holidayDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    // Nghỉ toàn công ty ?
     private Boolean isGlobal = true;
-
-    // Có hưởng lương không
     private Boolean isPaid = true;
 
-    // Ghi chú
     @Column(columnDefinition = "TEXT")
     private String description;
+
+    @Enumerated(EnumType.STRING)
+    private HolidayType type;
+
+    @OneToMany(
+            mappedBy = "holiday",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<HolidayTimeline> timelines;
 }

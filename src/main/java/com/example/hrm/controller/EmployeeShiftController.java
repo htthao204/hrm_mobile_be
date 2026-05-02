@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/employee-shifts")
+@RequestMapping("/api/employee-shifts")
 @RequiredArgsConstructor
 public class EmployeeShiftController {
 

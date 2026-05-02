@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "accounts")
 @Getter
@@ -22,4 +24,25 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+    // ===== SECURITY =====
+    private Boolean active = true;
+
+    // bắt đổi password lần đầu
+    private Boolean firstLogin = true;
+
+    // audit
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }

@@ -1,18 +1,26 @@
 package com.example.hrm.repository;
 
 import com.example.hrm.entity.Holiday;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 public interface HolidayRepository
-        extends JpaRepository<Holiday, Long> {
+        extends JpaRepository<Holiday, Integer>, JpaSpecificationExecutor<Holiday> {
 
-    List<Holiday> findByHolidayDateBetween(
-            LocalDate from,
-            LocalDate to
+
+    boolean existsByStartDateLessThanEqualAndEndDateGreaterThanEqual(
+            LocalDate start,
+            LocalDate end
     );
-    Optional<Holiday> findByHolidayDate(LocalDate date);
+
+    List<Holiday> findByStartDateLessThanEqualAndEndDateGreaterThanEqual(
+            LocalDate to,
+            LocalDate from
+    );
 }
