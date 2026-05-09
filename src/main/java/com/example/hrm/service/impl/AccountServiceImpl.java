@@ -131,8 +131,16 @@ public class AccountServiceImpl implements AccountService {
                         account.getUsername()
                 );
 
+        Integer employeeId = null;
+
+        // ✅ lấy employeeId nếu tồn tại
+        if (account.getEmployee() != null) {
+            employeeId = account.getEmployee().getId();
+        }
+
         return LoginResponse.builder()
                 .id(account.getId())
+                .employeeId(employeeId) // ⭐ thêm dòng này
                 .username(account.getUsername())
                 .role(account.getRole().getName())
                 .firstLogin(account.getFirstLogin())

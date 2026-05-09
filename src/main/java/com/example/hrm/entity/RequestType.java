@@ -1,49 +1,25 @@
 package com.example.hrm.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = "request_types")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class RequestType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, unique = true)
     private RequestTypeCode code;
 
+    @Column(nullable = false)
     private String name;
-
-    public RequestType() {}
-
-    public RequestType(int id, RequestTypeCode code, String name) {
-        this.id = id;
-        this.code = code;
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public RequestTypeCode getCode() {
-        return code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setCode(RequestTypeCode code) {
-        this.code = code;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

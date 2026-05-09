@@ -5,19 +5,24 @@ import com.example.hrm.dto.response.EmployeeResponse;
 import com.example.hrm.entity.EmployeeInformation;
 import com.example.hrm.entity.EmployeePrivateInformation;
 import org.springframework.stereotype.Component;
-
 @Component
 public class EmployeeMapper {
 
     // ================= EMPLOYEE =================
 
-    public EmployeeInformation toEmployee(EmployeeCreateRequest request) {
+    public EmployeeInformation toEmployee(
+            EmployeeCreateRequest request
+    ) {
 
-        EmployeeInformation emp = new EmployeeInformation();
+        EmployeeInformation emp =
+                new EmployeeInformation();
 
         emp.setFullName(request.getFullName());
+
         emp.setEmail(request.getEmail());
+
         emp.setPhone(request.getPhone());
+
         emp.setHireDate(request.getHireDate());
 
         return emp;
@@ -27,17 +32,23 @@ public class EmployeeMapper {
             EmployeeInformation emp,
             EmployeeCreateRequest request
     ) {
+
         emp.setFullName(request.getFullName());
+
         emp.setEmail(request.getEmail());
+
         emp.setPhone(request.getPhone());
+
         emp.setHireDate(request.getHireDate());
     }
 
     // ================= PRIVATE INFO =================
 
-    public EmployeePrivateInformation toPrivateInformation(
+    public EmployeePrivateInformation
+    toPrivateInformation(
             EmployeeCreateRequest request
     ) {
+
         EmployeePrivateInformation info =
                 new EmployeePrivateInformation();
 
@@ -50,9 +61,18 @@ public class EmployeeMapper {
             EmployeePrivateInformation info,
             EmployeeCreateRequest request
     ) {
-        info.setDateOfBirth(request.getDateOfBirth());
-        info.setNationalId(request.getNationalId());
-        info.setAddress(request.getAddress());
+
+        info.setDateOfBirth(
+                request.getDateOfBirth()
+        );
+
+        info.setNationalId(
+                request.getNationalId()
+        );
+
+        info.setAddress(
+                request.getAddress()
+        );
     }
 
     // ================= RESPONSE =================
@@ -63,30 +83,42 @@ public class EmployeeMapper {
     ) {
 
         return EmployeeResponse.builder()
+
                 .id(emp.getId())
+
                 .fullName(emp.getFullName())
+
                 .email(emp.getEmail())
+
                 .phone(emp.getPhone())
+
                 .hireDate(emp.getHireDate())
 
+                .avatarUrl(emp.getAvatarUrl())
+
+                .faceImageUrl(emp.getFaceImageUrl())
+
+                // ===== DEPARTMENT =====
                 .departmentName(
                         emp.getDepartment() != null
                                 ? emp.getDepartment().getName()
                                 : null
                 )
 
+                // ===== POSITION =====
                 .positionName(
                         emp.getPosition() != null
                                 ? emp.getPosition().getName()
                                 : null
                 )
 
-                // ===== ACCOUNT MAPPING =====
+                // ===== ACCOUNT =====
                 .accountId(
                         emp.getAccount() != null
                                 ? emp.getAccount().getId()
                                 : null
                 )
+
                 .username(
                         emp.getAccount() != null
                                 ? emp.getAccount().getUsername()
@@ -95,28 +127,37 @@ public class EmployeeMapper {
 
                 // ===== PRIVATE INFO =====
                 .dateOfBirth(
-                        info != null ? info.getDateOfBirth() : null
+                        info != null
+                                ? info.getDateOfBirth()
+                                : null
                 )
 
                 .gender(
-                        info != null && info.getGender() != null
+                        info != null
+                                && info.getGender() != null
                                 ? info.getGender().name()
                                 : null
                 )
 
                 .nationalId(
-                        info != null ? info.getNationalId() : null
+                        info != null
+                                ? info.getNationalId()
+                                : null
                 )
 
                 .country(
-                        info != null && info.getCountry() != null
+                        info != null
+                                && info.getCountry() != null
                                 ? info.getCountry().getName()
                                 : null
                 )
 
                 .address(
-                        info != null ? info.getAddress() : null
+                        info != null
+                                ? info.getAddress()
+                                : null
                 )
+
                 .build();
     }
 }

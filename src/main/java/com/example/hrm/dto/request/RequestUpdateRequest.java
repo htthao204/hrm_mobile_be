@@ -1,18 +1,16 @@
 package com.example.hrm.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
-@Data
-public class RequestCreateRequest {
 
-    private Integer employeeId;
-    private String requestTypeCode;
+@Data
+public class RequestUpdateRequest {
 
     private LocalDate startDate;
     private LocalDate endDate;
+
     private LocalTime startTime;
     private LocalTime endTime;
 

@@ -1,6 +1,6 @@
 package com.example.hrm.type;
 
 public enum AttendanceAction {
-    CHECKIN,
-    CHECKOUT
+    CHECK_IN,  // Thêm dấu gạch dưới ở đây
+    CHECK_OUT
 }

@@ -41,6 +41,9 @@ public class EmployeeInformation {
     @JoinColumn(name = "account_id")
     private Account account;
 
+    @Column(name = "avatar_url")
+    private String avatarUrl;
+
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
@@ -54,4 +57,6 @@ public class EmployeeInformation {
             fetch = FetchType.LAZY
     )
     private EmployeePrivateInformation privateInformation;
+    @Column(name = "face_image_url")
+    private String faceImageUrl;
 }

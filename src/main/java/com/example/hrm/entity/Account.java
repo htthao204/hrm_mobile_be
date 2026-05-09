@@ -40,6 +40,8 @@ public class Account {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
     }
+    @OneToOne(mappedBy = "account")
+    private EmployeeInformation employee;
 
     @PreUpdate
     public void preUpdate() {

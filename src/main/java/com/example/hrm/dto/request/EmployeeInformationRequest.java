@@ -13,6 +13,7 @@ public class EmployeeInformationRequest {
 
     private Integer departmentId;
     private Integer positionId;
+    private String avatarUrl;
     private Integer accountId;
 
     private LocalDate hireDate;

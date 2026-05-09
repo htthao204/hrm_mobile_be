@@ -10,7 +10,7 @@ import java.util.List;
 public interface RequestRepository
         extends JpaRepository<Request, Long> {
 
-    List<Request> findByEmployee_Id(Long employeeId);
+    List<Request> findByEmployee_Id(Integer employeeId);
 
     List<Request> findByStatus(RequestStatus status);
 

@@ -19,7 +19,6 @@ public class EmployeeCreateRequest {
     private String nationalId;    // CCCD/CMND
     private Country country;
     private String address;
-
     // ===== Công việc =====
     private Integer departmentId;
     private Integer positionId;

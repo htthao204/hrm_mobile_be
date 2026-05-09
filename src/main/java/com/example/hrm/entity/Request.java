@@ -19,12 +19,14 @@ public class Request {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
+    // Người tạo request
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id", nullable = false)
     private EmployeeInformation employee;
 
-    @ManyToOne
-    @JoinColumn(name = "request_type_id")
+    // Loại request
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "request_type_id", nullable = false)
     private RequestType requestType;
 
     private LocalDate startDate;
@@ -40,18 +42,37 @@ public class Request {
     private String metadata;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private RequestStatus status;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime approvedAt;
 
-    @ManyToOne
+    // Người duyệt
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "approver_id")
     private EmployeeInformation approver;
 
     @Column(columnDefinition = "TEXT")
     private String rejectReason;
-    @OneToMany(mappedBy = "request", cascade = CascadeType.ALL)
+
+    @OneToMany(
+            mappedBy = "request",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<RequestAttachment> attachments;
+
+    // auto set time
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+        status = RequestStatus.PENDING;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }

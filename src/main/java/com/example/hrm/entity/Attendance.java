@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "attendances")
@@ -22,5 +23,12 @@ public class Attendance {
 
     private LocalDate date;
 
+    private LocalDateTime checkInTime;
+
+    private LocalDateTime checkOutTime;
+
     private Double workingHours;
+
+    private String status;
+    // PRESENT / ABSENT / LATE / HALF_DAY
 }

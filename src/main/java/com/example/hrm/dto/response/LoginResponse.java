@@ -9,6 +9,7 @@ public class LoginResponse {
 
     private Integer id;
     private String username;
+    private Integer employeeId;
     private String role;
 
     private Boolean firstLogin;

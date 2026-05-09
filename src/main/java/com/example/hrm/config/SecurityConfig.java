@@ -29,6 +29,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/holidays/**").permitAll()
                         .requestMatchers("/api/leave-types/**").permitAll()
+                        .requestMatchers("/api/request-types/**").permitAll()
                         .requestMatchers("/api/leaves/**").permitAll()
                         .requestMatchers("/api/departments/**").permitAll()
                         .requestMatchers("/api/countries/**").permitAll()
@@ -37,6 +38,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/shifts/**").permitAll()
                         .requestMatchers("/api/schedules/**").permitAll()
                         .requestMatchers("/api/employees/**").permitAll()
+                        .requestMatchers("/api/requests/**").permitAll()
+                        .requestMatchers("/api/attendance-logs/**").permitAll()
+                        .requestMatchers("/api/attendance-logs/employee/**").permitAll()
                         .anyRequest().authenticated()
                 )
 
